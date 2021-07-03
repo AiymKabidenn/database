@@ -1,0 +1,44 @@
+CREATE DATABASE lab2;
+
+CREATE TABLE countries(
+    country_id serial,
+    country_name text,
+    region_id integer,
+    population integer
+);
+
+INSERT INTO countries(country_name, region_id, population) VALUES ('America', 11, 220000000);
+
+INSERT INTO countries(country_name, region_id) values ('England', 2);
+
+select * from countries;
+
+INSERT INTO countries(region_id) values (NULL);
+
+INSERT INTO countries (country_name, region_id, population) values ('Brazil', 3, 180000000),
+                                                                   ('Australia', 4, 21000000),
+                                                                   ('Russia', 5, 140000000);
+
+ALTER TABLE countries
+ALTER country_name SET DEFAULT 'Kazakhstan';
+
+INSERT INTO countries(country_name, region_id, population) values (DEFAULT, 15, 55000000);
+
+INSERT INTO countries default values;
+
+CREATE TABLE  countries_new (like countries including all);
+
+INSERT INTO countries_new
+SELECT * from countries;
+
+UPDATE countries SET region_id = 1 WHERE region_id is NULL;
+
+UPDATE countries SET population = population * 1.1
+RETURNING country_name, population AS "New Population";
+
+DELETE FROM countries_new WHERE population<100000;
+
+DELETE FROM countries_new WHERE countries_new.country_id = countries.country_id;
+
+DELETE FROM countries
+RETURNING *;
