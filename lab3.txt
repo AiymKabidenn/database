@@ -1,0 +1,21 @@
+select lastname from employees;
+select distinct lastname from employees;
+select * from employees where lastname = 'Smith';
+select * from employees where lastname in ('Smith', 'Doe');
+select * from employees where department = 14;
+select * from employees where department in (37,77);
+select sum(budget) from departments;
+SELECT department, count(*) FROM employees GROUP BY department;
+select department, count(*) from employees group by department having count(*)>2;
+select name from departments order by budget desc limit 1 offset 1;
+select name, lastname from employees where department in (select code from departments order by budget asc limit 1);
+select name from employees union select name from customers where city = 'Almaty';
+select name,code from departments where budget>60000 order by budget;
+select name,code from departments where budget>60000 order by code desc;
+
+select name from departments order by budget desc limit 1 offset 1;
+select * from departments;
+update departments set budget=budget*0.9 where budget = (select budget from departments order by budget asc limit 1);
+update employees set department = 14 where department = 77;
+delete from employees where name = 'IT';
+delete from employees;
